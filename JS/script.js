@@ -24,7 +24,8 @@
 // Immaginate la logica come fosse uno snack: "Dati 2 array di numeri, indica quali e quanti numeri ci sono in comune tra i due array"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//raccolta numeri utente
+const userInputs = document.getElementById("user-inputs");
 //Genero 5 numeri casuali
 function generateRandomNumbers() {
   //Inizializzo un array vuoto dove finiranno i numeri generati
