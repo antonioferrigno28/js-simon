@@ -29,6 +29,10 @@ const userInputsContainerEl = document.getElementById("user-inputs");
 const randomNumbersEl = document.getElementById("random-numbers");
 const startGameButtonEl = document.getElementById("start-game");
 const submitNumbersButtonEl = document.getElementById("submit-user-numbers");
+const resultEl = document.getElementById("result");
+const correctNumbersEl = document.getElementById("correct-numbers");
+const userNumbersEl = document.getElementById("user-numbers");
+const randomNumbersResultEl = document.getElementById("random-numbers-result");
 
 //raccolta numeri utente
 const userInputs = document.getElementById("user-inputs");
@@ -79,6 +83,12 @@ startGameButtonEl.addEventListener("click", function () {
 submitNumbersButtonEl.addEventListener("click", function () {
   // Raccogli i numeri inseriti dall'utente
   const userNumbers = collectUserNumbers();
+
+  // Richiamo funzione per il confronto dei numeri inseriti dall'utente con quelli generati casualmente
+  const correctNumbers = compareNumbers();
+
+  // Visualizza il risultato in pagina
+  showResult(correctNumbers, userNumbers);
 });
 
 // Funzione per mostrare gli input
@@ -107,4 +117,45 @@ function collectUserNumbers() {
 
   // Ritorna l'array con i numeri inseriti dall'utente
   return userNumbers;
+}
+
+//Funzione per il confronto dei numeri inseriti dall'utente con quelli generati casualmente
+function compareNumbers() {
+  //Raccogli i numeri generati casualmente
+  const randomNumbers = generateRandomNumbers();
+  //Raccogli i numeri inseriti dall'utente
+  const userNumbers = collectUserNumbers();
+  //Inizializzo un array vuoto
+  let correctNumbers = [];
+  //Per ogni numero generato
+  randomNumbers.forEach((number) => {
+    //Se il numero è presente nell'array dei numeri inseriti dall'utente
+    if (userNumbers.includes(number)) {
+      //Allora lo pusho nell'array
+      correctNumbers.push(number);
+    }
+  });
+  //Ritorno l'array con i numeri corretti
+  return correctNumbers;
+}
+
+//Funzione per visualizzare il risultato in pagina
+function showResult(correctNumbers, userNumbers, randomNumbers) {
+  //Ritorna la quantità di numeri corretti
+  const correctNumbersLength = correctNumbers.length;
+  //Ritorna la quantità di numeri inseriti dall'utente
+  const userNumbersLength = userNumbers.length;
+
+  //Visualizza il risultato in pagina
+  resultEl.innerHTML = `Hai indovinato ${correctNumbersLength} numeri correttamente`;
+  console.log(correctNumbersLength, userNumbersLength);
+
+  //visualizza i numeri corretti in pagina
+  correctNumbersEl.innerHTML = `I numeri corretti sono: ${correctNumbers}`;
+
+  //visualizza i numeri inseriti dall'utente in pagina
+  userNumbersEl.innerHTML = `I numeri inseriti dall'utente sono: ${userNumbers}`;
+
+  //Visualizza i numeri generati in pagina
+  randomNumbersResultEl.innerHTML = `I numeri generati casualmente sono: ${randomNumbers}`;
 }
