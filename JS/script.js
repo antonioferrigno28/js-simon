@@ -33,10 +33,11 @@ const submitNumbersButtonEl = document.getElementById("submit-user-numbers");
 //raccolta numeri utente
 const userInputs = document.getElementById("user-inputs");
 
+//Inizializzo un array vuoto dove finiranno i numeri generati
+let generatedNumbers = [];
+
 //Funzione per generare 5 numeri casuali
 function generateRandomNumbers() {
-  //Inizializzo un array vuoto dove finiranno i numeri generati
-  let generatedNumbers = [];
   //FINCHE' la lunghezza dell'array è minore di 5
   while (generatedNumbers.length < 5) {
     //Genero un numero random da 1 a 99
@@ -53,7 +54,7 @@ function generateRandomNumbers() {
 
 //console.log(generateRandomNumbers());
 
-// Funzione per iniziare il gioco
+// Event listener pulsante "Inizia"
 startGameButtonEl.addEventListener("click", function () {
   // richiamo funzione che genera 5 numeri casuali tra 1 e 99
   const randomNumbers = generateRandomNumbers();
