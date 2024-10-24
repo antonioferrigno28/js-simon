@@ -35,6 +35,7 @@ const userNumbersEl = document.getElementById("user-numbers");
 const randomNumbersResultEl = document.getElementById("random-numbers-result");
 const invalidNumbersEl = document.getElementById("invalid-numbers");
 const error = document.getElementById("error");
+const playAgainEl = document.getElementById("play-again");
 
 //raccolta numeri utente
 const userInputs = document.getElementById("user-inputs");
@@ -111,8 +112,40 @@ submitNumbersButtonEl.addEventListener("click", function () {
 
   //Nascondi il tasto "Invia"
   submitNumbersButtonEl.classList.add("d-none");
+
+  //Mostra il tasto "Gioca ancora"
+  playAgainEl.classList.remove("d-none");
 });
 
+//Event listener pulsante "Gioca ancora"
+playAgainEl.addEventListener("click", function () {
+  // Ripristina l'array di numeri generati
+  generatedNumbers = [];
+
+  // Nascondi il pulsante "Gioca ancora"
+  playAgainEl.classList.add("d-none");
+
+  // Svuota i risultati precedenti
+  resultEl.innerHTML = "";
+  correctNumbersEl.innerHTML = "";
+  userNumbersEl.innerHTML = "";
+  randomNumbersResultEl.innerHTML = "";
+
+  // Mostra il pulsante "Inizia"
+  startGameButtonEl.classList.remove("d-none");
+
+  // Svuota gli input dell'utente
+  const userInputs = document.querySelectorAll("#user-inputs input");
+  userInputs.forEach((input) => {
+    input.value = ""; // Reset input value
+  });
+
+  // Nascondi il div degli input
+  userInputsContainerEl.classList.add("d-none");
+
+  // Nascondi eventuali messaggi di errore
+  error.classList.add("d-none");
+});
 // Funzione per mostrare gli input
 function showUserInputs() {
   userInputsContainerEl.classList.remove("d-none");
