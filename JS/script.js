@@ -24,9 +24,15 @@
 // Immaginate la logica come fosse uno snack: "Dati 2 array di numeri, indica quali e quanti numeri ci sono in comune tra i due array"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//raccolta elementi pagina
+const userInputsContainerEl = document.getElementById("user-inputs");
+const randomNumbersEl = document.getElementById("random-numbers");
+const startGameButtonEl = document.getElementById("start-game");
+
 //raccolta numeri utente
 const userInputs = document.getElementById("user-inputs");
-//Genero 5 numeri casuali
+
+//Funzione per generare 5 numeri casuali
 function generateRandomNumbers() {
   //Inizializzo un array vuoto dove finiranno i numeri generati
   let generatedNumbers = [];
@@ -45,3 +51,26 @@ function generateRandomNumbers() {
 }
 
 //console.log(generateRandomNumbers());
+
+// Funzione per iniziare il gioco
+startGameButtonEl.addEventListener("click", function () {
+  // richiamo funzione che genera 5 numeri casuali tra 1 e 99
+  const randomNumbers = generateRandomNumbers();
+
+  // Visualizza i numeri generati in pagina
+  randomNumbersEl.innerHTML = randomNumbers;
+
+  // Dopo 30 secondi nasconde i numeri e mostra gli input
+  setTimeout(function () {
+    // Nascondi i numeri
+    randomNumbersEl.classList.add("d-none");
+
+    // Richiamo funzione che mostra gli input
+    showUserInputs();
+  }, 3000);
+});
+
+// Funzione per mostrare gli input
+function showUserInputs() {
+  userInputsContainerEl.classList.remove("d-none");
+}
