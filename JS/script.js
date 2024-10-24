@@ -33,12 +33,16 @@ const resultEl = document.getElementById("result");
 const correctNumbersEl = document.getElementById("correct-numbers");
 const userNumbersEl = document.getElementById("user-numbers");
 const randomNumbersResultEl = document.getElementById("random-numbers-result");
+const invalidNumbersEl = document.getElementById("invalid-numbers");
+const error = document.getElementById("error");
 
 //raccolta numeri utente
 const userInputs = document.getElementById("user-inputs");
 
 //Inizializzo un array vuoto dove finiranno i numeri generati
 let generatedNumbers = [];
+
+//Validazione input utente
 
 //Funzione per generare 5 numeri casuali
 function generateRandomNumbers() {
@@ -84,11 +88,29 @@ submitNumbersButtonEl.addEventListener("click", function () {
   // Raccogli i numeri inseriti dall'utente
   const userNumbers = collectUserNumbers();
 
+  //Validazione input utente
+  //SE la validazione fallisce
+  if (!validateUserNumbers(userNumbers)) {
+    //Visualizza l'errore in pagina
+    error.classList.remove("d-none");
+    error.innerHTML =
+      "ERRORE! Hai inserito un doppione o un numero minore di 1 o maggiore di 99";
+    //interrompe l'esecuzione
+    return;
+    //ALTRIMENTI
+  } else {
+    //Nascondi l'errore
+    error.classList.add("d-none");
+  }
+
   // Richiamo funzione per il confronto dei numeri inseriti dall'utente con quelli generati casualmente
   const correctNumbers = compareNumbers();
 
   // Visualizza il risultato in pagina
   showResult(correctNumbers, userNumbers);
+
+  //Nascondi il tasto "Invia"
+  submitNumbersButtonEl.classList.add("d-none");
 });
 
 // Funzione per mostrare gli input
@@ -140,7 +162,7 @@ function compareNumbers() {
 }
 
 //Funzione per visualizzare il risultato in pagina
-function showResult(correctNumbers, userNumbers, randomNumbers) {
+function showResult(correctNumbers, userNumbers) {
   //Ritorna la quantità di numeri corretti
   const correctNumbersLength = correctNumbers.length;
   //Ritorna la quantità di numeri inseriti dall'utente
@@ -148,14 +170,48 @@ function showResult(correctNumbers, userNumbers, randomNumbers) {
 
   //Visualizza il risultato in pagina
   resultEl.innerHTML = `Hai indovinato ${correctNumbersLength} numeri correttamente`;
-  console.log(correctNumbersLength, userNumbersLength);
+  //console.log(correctNumbersLength, userNumbersLength);
 
   //visualizza i numeri corretti in pagina
-  correctNumbersEl.innerHTML = `I numeri corretti sono: ${correctNumbers}`;
+  if (correctNumbersLength > 0) {
+    //Inserisci i numeri corretti in pagina
+    correctNumbersEl.innerHTML = `I numeri corretti sono: ${correctNumbers}`;
+  } else {
+    //Se non ci sono numeri corretti visualizza messaggio "di sconfitta" in pagina
+    correctNumbersEl.innerHTML = `Non posso mostrarti i numeri corretti... Perchè non hai indovinato nessun numero :(`;
+  }
 
   //visualizza i numeri inseriti dall'utente in pagina
   userNumbersEl.innerHTML = `I numeri inseriti dall'utente sono: ${userNumbers}`;
 
   //Visualizza i numeri generati in pagina
-  randomNumbersResultEl.innerHTML = `I numeri generati casualmente sono: ${randomNumbers}`;
+  randomNumbersResultEl.innerHTML = `I numeri generati casualmente sono: ${generatedNumbers}`;
+}
+
+//BONUS
+
+function validateUserNumbers(userNumbers) {
+  let seenNumbers = []; // Array per tenere traccia dei numeri già inseriti
+  //PER i che inizia da 0 fino ad arrivare alla lunghezza dell'array, incrementa i
+  for (let i = 0; i < userNumbers.length; i++) {
+    // Leggi il numero corrente
+    const num = userNumbers[i];
+
+    // SE un numero è minore di 0, maggiore di 99 o se è NaN
+    if (isNaN(num) || num <= 0 || num > 99) {
+      // Allora ritorna falso
+      return false;
+    }
+
+    // Controlla se il numero è già stato inserito
+    if (seenNumbers.includes(num)) {
+      // Ritorna falso
+      return false;
+    }
+
+    // Aggiungi il numero all'array dei numeri già visti
+    seenNumbers.push(num);
+  }
+  // Ritorna vero se tutte le validazioni passano
+  return true;
 }
