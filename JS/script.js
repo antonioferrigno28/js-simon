@@ -75,9 +75,36 @@ startGameButtonEl.addEventListener("click", function () {
   }, 3000);
 });
 
+// Event listener pulsante "Invia"
+submitNumbersButtonEl.addEventListener("click", function () {
+  // Raccogli i numeri inseriti dall'utente
+  const userNumbers = collectUserNumbers();
+});
+
 // Funzione per mostrare gli input
 function showUserInputs() {
   userInputsContainerEl.classList.remove("d-none");
   //Mostra il tasto "Invia"
   submitNumbersButtonEl.classList.remove("d-none");
+}
+
+//Funzione per raccogliere i numeri inseriti dall'utente
+function collectUserNumbers() {
+  // Raccolgo tutti gli input del div user-inputs
+  const userInputs = document.querySelectorAll("#user-inputs input");
+  // Inizializzo un array vuoto
+  let userNumbers = [];
+  // Per ogni input
+  userInputs.forEach((input) => {
+    // Leggo il valore dell'input e lo trasformo in numero
+    const value = parseInt(input.value);
+    //SE il valore è un numero
+    if (!isNaN(value)) {
+      // Allora lo pusho nell'array
+      userNumbers.push(value);
+    }
+  });
+
+  // Ritorna l'array con i numeri inseriti dall'utente
+  return userNumbers;
 }
