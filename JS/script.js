@@ -28,6 +28,7 @@
 const userInputsContainerEl = document.getElementById("user-inputs");
 const randomNumbersEl = document.getElementById("random-numbers");
 const startGameButtonEl = document.getElementById("start-game");
+const submitNumbersButtonEl = document.getElementById("submit-user-numbers");
 
 //raccolta numeri utente
 const userInputs = document.getElementById("user-inputs");
@@ -60,6 +61,9 @@ startGameButtonEl.addEventListener("click", function () {
   // Visualizza i numeri generati in pagina
   randomNumbersEl.innerHTML = randomNumbers;
 
+  //Nascondi il tasto "Inizia"
+  startGameButtonEl.classList.add("d-none");
+
   // Dopo 30 secondi nasconde i numeri e mostra gli input
   setTimeout(function () {
     // Nascondi i numeri
@@ -73,4 +77,6 @@ startGameButtonEl.addEventListener("click", function () {
 // Funzione per mostrare gli input
 function showUserInputs() {
   userInputsContainerEl.classList.remove("d-none");
+  //Mostra il tasto "Invia"
+  submitNumbersButtonEl.classList.remove("d-none");
 }
